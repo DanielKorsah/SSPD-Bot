@@ -79,6 +79,13 @@ def firstEmptyColum():
 
 
 @bot.command(pass_context=True)
+async def ID(ctx):
+    location = client.get_channel(id=373156271056224256)
+    print(location)
+    await client.send_message(location, "TEST")
+
+
+@bot.command(pass_context=True)
 @commands.has_role("Moderators™")
 async def strike(ctx, user: discord.Member, rule):
     print(bool(alreadyListedCheck(user, test)))
@@ -118,6 +125,5 @@ letters = ["A", "B", "C", "D", "E", "F", "G",
            "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]
 row_index = next_available_row(test)
 print(row_index)
-
 
 bot.run(d_token)
