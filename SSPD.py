@@ -80,6 +80,8 @@ def alreadyListedCheck(user: discord.Member, worksheet):
 def firstEmptyColum():
     return True
 
+# hmmm
+
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
