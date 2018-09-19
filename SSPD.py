@@ -8,14 +8,10 @@ from discord.ext import commands
 from discord.ext.commands import bot
 import asyncio
 import datetime
-<<<<<<< HEAD
-
-=======
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
->>>>>>> Production
 now = datetime.datetime.now()
 bot = commands.Bot(command_prefix='&')
 client = discord.Client()
@@ -34,19 +30,6 @@ dc = gspread.authorize(creds)
 # initialise current sheet
 sheet = gc.open("Warnings List").sheet1
 # intialise test sheet
-<<<<<<< HEAD
-test = gc.open("SSPD-Test").sheet1
-
-all = sheet.get_all_records(False, 3, "")
-
-
-def GetRow(num):
-    warnings = sheet.row_values(num)
-    # remove empty cells
-    warnings = list(filter(lambda x: x != '', warnings))
-    # warnings.insert(5, "|")
-    return warnings
-=======
 # test = gc.open("SSPD-Test").sheet1
 
 #-------------------------DANGER: SET TEST SHEET EQUAL TO PROD : DANGER---------------------------#
@@ -58,7 +41,6 @@ all = sheet.get_all_records(False, 3, "")
 #-----Hardcode-----
 
 #------------------
->>>>>>> Production
 
 
 @bot.event
@@ -104,10 +86,6 @@ async def strike(ctx, user: discord.Member, rule):
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
-<<<<<<< HEAD
-async def getline(ctx, num):
-    await bot.say(GetRow(num))
-=======
 async def channelTest(ctx, flag: int):
     if flag == 3:
         general = bot.get_channel(266593626501545984)
@@ -129,7 +107,6 @@ def GetRow(num):
     warnings = list(filter(lambda x: x != '', warnings))
     # warnings.insert(5, "|")
     return warnings
->>>>>>> Production
 
 
 def next_available_row(worksheet):
@@ -151,50 +128,12 @@ def firstEmptyColum():
     return True
 
 
-<<<<<<< HEAD
-@bot.command(pass_context=True)
-async def ID(ctx):
-    location = client.get_channel(id=373156271056224256)
-    print(location)
-    await client.send_message(location, "TEST")
-
-
-@bot.command(pass_context=True)
-@commands.has_role("Moderators™")
-async def strike(ctx, user: discord.Member, rule):
-    print(bool(alreadyListedCheck(user, test)))
-    if bool(alreadyListedCheck(user, test)) == False:
-        row_index = next_available_row(test)
-        if test.cell(row_index, 1).value == "":
-            cell_list = test.range(
-                letters[0]+str(row_index)+":" + letters[4]+str(row_index))
-            cell_list[0].value = str(user)
-            cell_list[1].value = str("Rule " + rule)
-            cell_list[2].value = str(now.strftime("%Y-%m-%d"))
-            cell_list[3].value = str(ctx.message.author)
-            test.update_cells(cell_list)
-    else:
-
-        alreadyListedCheck(user, test)
-    await notification(user, rule)
-
-
-async def notification(user: discord.Member, rule):
-=======
 async def notification(ctx, user: discord.Member, rule):
->>>>>>> Production
     embed = discord.Embed(title="POO LAGOONER DETECTED: Disciplinary Action Taken", description="Strike dealt to @" +
                           str(user) + " for rule" + str(rule) + ".", color=0xFF0000)
     embed.set_footer(
         text="Further misbehaviour may result in deportation to Poo Island.")
     embed.set_image(url="https://i.imgur.com/eYTcdNe.jpg")
-<<<<<<< HEAD
-    await client.send_message(discord.Object(id='general'), embed=embed)
-    noti_string = str(str(user) + " striked for rule " +
-                      rule + " on " + now.strftime("%Y-%m-%d") + ".")
-    await client.send_message(discord.Object(id='bot-log'), noti_string)
-
-=======
     # await client.send_message(discord.Object(id='general'), embed=embed)
     noti_string = str(str(user) + " striked for rule " +
                       rule + " on " + now.strftime("%Y-%m-%d") + ".")
@@ -210,7 +149,6 @@ letters = ["A", "B", "C", "D", "E", "F", "G",
            "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]
 row_index = next_available_row(test)
 # print(row_index)
->>>>>>> Production
 
 a = ""
 print(bool(a))
