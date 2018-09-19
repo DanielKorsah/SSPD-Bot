@@ -30,7 +30,7 @@ dc = gspread.authorize(creds)
 # initialise current sheet
 sheet = gc.open("Warnings List").sheet1
 # intialise test sheet
-#test = gc.open("SSPD-Test").sheet1
+# test = gc.open("SSPD-Test").sheet1
 
 #-------------------------DANGER: SET TEST SHEET EQUAL TO PROD : DANGER---------------------------#
 test = sheet
@@ -46,8 +46,8 @@ all = sheet.get_all_records(False, 3, "")
 @bot.event
 #@commands.has_role("Moderators™")
 async def on_ready():
-    print(bot.user.name + " Ready...")
     print("ID: " + str(bot.user.id))
+    print(bot.user.name + " Ready...")
 
 #----------------------
 
@@ -86,18 +86,18 @@ async def strike(ctx, user: discord.Member, rule):
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
-async def channelTest(ctx, flag):
-    general = bot.get_channel(266593626501545984)
-    modChannel = bot.get_channel(300045476554735618)
-    logChannel = bot.get_channel(373156271056224256)
-
+async def channelTest(ctx, flag: int):
     if flag == 3:
+        general = bot.get_channel(266593626501545984)
         await general.send("test" + str(flag))
     elif flag == 2:
+        modChannel = bot.get_channel(300045476554735618)
         await modChannel.send("test" + str(flag))
-    else:
+    elif flag == 1:
+        logChannel = bot.get_channel(373156271056224256)
         await logChannel.send("test" + str(flag))
-
+    else:
+        ctx.send("Incrrect usage. \n channeltest [x] where 0<x<4")
 #-----------------------------
 
 
@@ -142,13 +142,13 @@ async def notification(ctx, user: discord.Member, rule):
 
 
 a = ""
-print(bool(a))
+# print(bool(a))
 a = "a"
-print(bool(a))
+# print(bool(a))
 letters = ["A", "B", "C", "D", "E", "F", "G",
            "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]
 row_index = next_available_row(test)
-print(row_index)
+# print(row_index)
 
 
 bot.run(d_token)
