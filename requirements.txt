@@ -1,0 +1,11 @@
+
+gspread
+oauth2client.service_account 
+googleapiclient 
+pprint 
+discord
+discord.ext 
+discord.ext.commands
+asyncio
+datetime
+logging
