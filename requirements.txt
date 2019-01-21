@@ -1,6 +1,7 @@
 
 gspread
-oauth2client.service_account 
+oauth2client.service_account
+ServiceAccountCredentials 
 googleapiclient 
 pprint 
 discord
