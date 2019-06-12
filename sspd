@@ -82,6 +82,8 @@ async def on_message(message):
 
         # remove invite links
         if "discord.gg" in message.content:
+            modChannel.send(message.user + "Posted a suspected invite link in the message: \n" +
+                            "\"" + message.content + "\"\n" + "in " + message.channel.name)
             await message.delete()
 
     # free up the bot event
