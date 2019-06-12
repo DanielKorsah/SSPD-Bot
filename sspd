@@ -47,6 +47,10 @@ e.set_image(
 
 #------------------
 
+general = bot.get_channel(266593626501545984)
+modChannel = bot.get_channel(300045476554735618)
+logChannel = bot.get_channel(373156271056224256)
+
 
 @bot.event
 #@commands.has_role("Moderators™")
@@ -125,13 +129,10 @@ async def strike(ctx, user: discord.Member, rule):
 @commands.has_role("Moderators™")
 async def channelTest(ctx, flag: int):
     if flag == 3:
-        general = bot.get_channel(266593626501545984)
         await general.send("test" + str(flag))
     elif flag == 2:
-        modChannel = bot.get_channel(300045476554735618)
         await modChannel.send("test" + str(flag))
     elif flag == 1:
-        logChannel = bot.get_channel(373156271056224256)
         await logChannel.send("test" + str(flag))
     else:
         ctx.send("Incrrect usage. \n channeltest [x] where 0<x<4")
