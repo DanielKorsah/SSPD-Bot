@@ -18,13 +18,15 @@ bot = commands.Bot(command_prefix='&')
 client = discord.Client()
 
 # credential file for discord token
-token_file = open("/home/pi/exec/dToken.txt", "r")
+# windows path ../SSPD Secrets/
+# on pi in same directory
+token_file = open("dToken.txt", "r")
 d_token = token_file.readline()
 
 # authorisation to access google sheet
 scope = ["https://spreadsheets.google.com/feeds"]
 creds = ServiceAccountCredentials.from_json_keyfile_name(
-    "/home/pi/exec/client_secret.json", scope)
+    "client_secret.json", scope)
 gc = gspread.authorize(creds)
 dc = gspread.authorize(creds)
 
@@ -47,17 +49,22 @@ e.set_image(
 
 #------------------
 
-general = bot.get_channel(266593626501545984)
-modChannel = bot.get_channel(300045476554735618)
-logChannel = bot.get_channel(373156271056224256)
-
 
 @bot.event
 #@commands.has_role("Moderators™")
 async def on_ready():
+    # initialise channel ids
+    global general
+    general = bot.get_channel(266593626501545984)
+    global modChannel
+    modChannel = bot.get_channel(300045476554735618)
+    global logChannel
+    logChannel = bot.get_channel(373156271056224256)
+
     print("ID: " + str(bot.user.id))
     print(bot.user)
     print(bot.user.name + " Ready...")
+
 
 #----------------------
 
@@ -65,7 +72,6 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.author != bot.user:
-
         # if str.lower(message.content) == "ayy":
         #    channel = message.channel
         #    await channel.send("lmao")
@@ -82,8 +88,12 @@ async def on_message(message):
 
         # remove invite links
         if "discord.gg" in message.content:
-            modChannel.send(message.user + "Posted a suspected invite link in the message: \n" +
-                            "\"" + message.content + "\"\n" + "in " + message.channel.name)
+            msg = "User: " + message.author.name + ", id: " + \
+                str(message.author.id) + ", posted a suspected invite link in the message: \n" + \
+                "\"" + message.content + "\"\n" + "In channel: " + \
+                message.channel.name + "\nMessage removed."
+            await modChannel.send(msg)
+            print(msg)
             await message.delete()
 
     # free up the bot event
