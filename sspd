@@ -20,15 +20,14 @@ client = discord.Client()
 # credential file for discord token
 # windows path ../SSPD Secrets/
 # on pi in same directory
-token_file = open("dToken.txt", "r")
+token_file = open("../SSPD Secrets/dToken.txt", "r")
 d_token = token_file.readline()
 
 # authorisation to access google sheet
 scope = ["https://spreadsheets.google.com/feeds"]
 creds = ServiceAccountCredentials.from_json_keyfile_name(
-    "client_secret.json", scope)
+    "../SSPD Secrets/client_secret.json", scope)
 gc = gspread.authorize(creds)
-dc = gspread.authorize(creds)
 
 # initialise current sheet
 sheet = gc.open("Warnings List").sheet1
