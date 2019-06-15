@@ -2,3 +2,4 @@
 .vscode/
 client_secret.json
 dToken.txt
+*.log
