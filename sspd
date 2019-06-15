@@ -13,7 +13,8 @@ import logging
 
 
 LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
-logging.basicConfig(filename="bot.log", level=logging.DEBUG, format=LOG_FORMAT)
+logging.basicConfig(filename="bot.log",
+                    level=logging.WARNING, format=LOG_FORMAT)
 logger = logging.getLogger()
 
 now = datetime.datetime.now()
@@ -55,6 +56,7 @@ e.set_image(
 @bot.event
 #@commands.has_role("Moderators™")
 async def on_ready():
+    logger.info("Startup")
     # initialise channel ids
     global general
     general = bot.get_channel(266593626501545984)
