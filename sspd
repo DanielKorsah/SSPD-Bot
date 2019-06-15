@@ -56,7 +56,6 @@ e.set_image(
 @bot.event
 #@commands.has_role("Moderators™")
 async def on_ready():
-    logger.info("Startup")
     # initialise channel ids
     global general
     general = bot.get_channel(266593626501545984)
