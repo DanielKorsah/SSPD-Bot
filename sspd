@@ -87,7 +87,7 @@ async def on_message(message):
 
         # remove invite links
         if "discord.gg" in message.content:
-            msg = "User: " + message.author.name + ", id: " + \
+            msg = "User: " + str(message.author) + ", id: " + \
                 str(message.author.id) + ", posted a suspected invite link in the message: \n" + \
                 "\"" + message.content + "\"\n" + "In channel: " + \
                 message.channel.name + "\nMessage removed."
@@ -107,7 +107,7 @@ async def lewgasm(ctx):
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
 async def ping(ctx):
-    await ctx.send("pong!")
+    await ctx.send(f"pong! {ctx.message.author}")
 
 
 @bot.command(pass_context=True)
@@ -118,7 +118,7 @@ async def getline(ctx, num):
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
-async def strike(ctx, user: discord.Member, rule):
+async def strike(ctx, user: discord.Member, rule=None):
     print(bool(alreadyListedCheck(user, test)))
     if bool(alreadyListedCheck(user, test)) == False:
         row_index = next_available_row(test)
@@ -173,7 +173,7 @@ def alreadyListedCheck(user: discord.Member, worksheet):
     str_list = list(filter(None, worksheet.col_values(1)))
     found = list()
     for item in str_list:
-        if user.id in item:
+        if str(user.discriminator) in item:
             found = str_list.index(item)
             break
     return found
