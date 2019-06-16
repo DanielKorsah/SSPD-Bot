@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3.6
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -24,13 +24,13 @@ client = discord.Client()
 # credential file for discord token
 # windows path ../SSPD Secrets/
 # on pi in same directory
-token_file = open("../SSPD Secrets/dToken.txt", "r")
+token_file = open("dToken.txt", "r")
 d_token = token_file.readline()
 
 # authorisation to access google sheet
-scope = ["https://spreadsheets.google.com/feeds"]
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name(
-    "../SSPD Secrets/client_secret.json", scope)
+    "client_secret.json", scope)
 gc = gspread.authorize(creds)
 
 # initialise current sheet
@@ -111,7 +111,7 @@ async def lewgasm(ctx):
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
 async def ping(ctx):
-    await ctx.send(f"pong! {ctx.message.author}")
+    await ctx.send(f"pong! %{ctx.message.author}")
 
 
 @bot.command(pass_context=True)
