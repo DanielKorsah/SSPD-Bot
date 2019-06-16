@@ -155,8 +155,6 @@ async def strike(ctx, user: discord.Member, rule=None):
             msg = f"{user} used their final warning. Banning user..."
             await modChannel.send(msg)
 
-    await ctx.send("striketest")
-
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
@@ -228,10 +226,6 @@ def alreadyListedCheck(user: discord.Member, worksheet):
             found = str_list.index(item)+2
             break
     return found
-
-
-def firstEmptyColum():
-    return True
 
 
 async def notification(ctx, user: discord.Member, rule):
