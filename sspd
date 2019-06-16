@@ -122,7 +122,7 @@ async def getline(ctx, num):
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
-async def strike(ctx, user: discord.Member, rule=None):
+async def strike(ctx, user: discord.Member, *, rule=None):
 
     # check if a user already has an entry
     listed = alreadyListedCheck(user, test)
@@ -147,6 +147,10 @@ async def strike(ctx, user: discord.Member, rule=None):
 
         # batch update
         test.update_cells(cell_list)
+
+        warning_text = f"You have been given a disciplinary strike in the Angory Tom Discord server for:\n{rule}\nStrikes may be repealed 1 month after recieving them if you ask a moderator.\Accumulate too many of these and you'll be banned."
+
+        await user.send(warning_text)
 
         if existing_warning_count(listed) == 3:
             msg = f"{user} is on penultimate warning. Take aditional action."
