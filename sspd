@@ -198,7 +198,7 @@ def make_new_record(ctx, user, rule, row_index, record_exists):
 
     if record_exists == False:
         new_record.append(str(user))
-        new_record.append(str("Rule " + rule))
+        new_record.append(str(rule))
         new_record.append(str(now.strftime("%Y-%m-%d")))
         new_record.append(str(ctx.message.author))
     else:
