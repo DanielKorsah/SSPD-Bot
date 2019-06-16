@@ -247,22 +247,4 @@ async def notification(ctx, user: discord.Member, rule):
     print(noti_string)
 
 
-a = ""
-# print(bool(a))
-a = "a"
-# print(bool(a))
-letters = ["A", "B", "C", "D", "E", "F", "G",
-           "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]
-row_index = next_available_row(test)
-# print(row_index)
-
-a = ""
-# print(bool(a))
-a = "a"
-# print(bool(a))
-letters = ["A", "B", "C", "D", "E", "F", "G",
-           "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]
-row_index = next_available_row(test)
-# print(row_index)
-
 bot.run(d_token)
