@@ -123,21 +123,39 @@ async def getline(ctx, num):
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
 async def strike(ctx, user: discord.Member, rule=None):
-    print(bool(alreadyListedCheck(user, test)))
-    if bool(alreadyListedCheck(user, test)) == False:
-        row_index = next_available_row(test)
-        if test.cell(row_index, 1).value == "":
-            cell_list = test.range(
-                letters[0]+str(row_index)+":" + letters[4]+str(row_index))
-            cell_list[0].value = str(user)
-            cell_list[1].value = str("Rule " + rule)
-            cell_list[2].value = str(now.strftime("%Y-%m-%d"))
-            cell_list[3].value = str(ctx.message.author)
-            test.update_cells(cell_list)
-    else:
 
-        alreadyListedCheck(user, test)
-    await notification(ctx, user, rule)
+    # check if a user already has an entry
+    listed = alreadyListedCheck(user, test)
+    row_index = next_available_row(test)
+
+    # if user has no record already then make one else append to the old
+    if bool(listed) == False:
+        cell_list = test.range(row_index, 1, row_index, 4)
+        record = make_new_record(ctx, user, rule, row_index, False)
+
+        cell_list = apply_values(cell_list, record)
+
+        # batch update
+        test.update_cells(cell_list)
+
+        await ctx.send("New Record")
+        await ctx.send(GetRow(row_index))
+    else:
+        # offset - how much to add to the indices to get the right columns
+        offset = existing_warning_count(listed) * 3
+        cell_list = test.range(listed, 2+offset, listed, 4+offset)
+        record = make_new_record(ctx, user, rule, listed, True)
+
+        await ctx.send(str(cell_list))
+        cell_list = apply_values(cell_list, record)
+        await ctx.send(str(cell_list))
+
+        # batch update
+        test.update_cells(cell_list)
+
+        await ctx.send("Appended Record")
+        await ctx.send(str(GetRow(listed)))
+    await ctx.send("striketest")
 
 
 @bot.command(pass_context=True)
@@ -160,6 +178,34 @@ async def pmTest(ctx, user: discord.Member, *message: str):
     #-----------------------------
 
 
+def apply_values(cell_list, values_list):
+    for i, cell in enumerate(cell_list):
+        cell_list[i].value = values_list[i]
+    return cell_list
+
+
+def existing_warning_count(row_num):
+    cols_used = len(GetRow(row_num))
+
+    count = (cols_used-1)/3
+    return count
+
+
+def make_new_record(ctx, user, rule, row_index, record_exists):
+    new_record = []
+
+    if record_exists == False:
+        new_record.append(str(user))
+        new_record.append(str("Rule " + rule))
+        new_record.append(str(now.strftime("%Y-%m-%d")))
+        new_record.append(str(ctx.message.author))
+    else:
+        new_record.append(str("Rule " + rule))
+        new_record.append(str(now.strftime("%Y-%m-%d")))
+        new_record.append(str(ctx.message.author))
+    return new_record
+
+
 def GetRow(num):
     warnings = sheet.row_values(num)
     # remove empty cells
@@ -175,10 +221,11 @@ def next_available_row(worksheet):
 
 def alreadyListedCheck(user: discord.Member, worksheet):
     str_list = list(filter(None, worksheet.col_values(1)))
-    found = list()
+    print(str_list)
+    found = None
     for item in str_list:
         if str(user.discriminator) in item:
-            found = str_list.index(item)
+            found = str_list.index(item)+2
             break
     return found
 
