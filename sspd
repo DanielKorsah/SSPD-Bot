@@ -137,24 +137,24 @@ async def strike(ctx, user: discord.Member, rule=None):
 
         # batch update
         test.update_cells(cell_list)
-
-        await ctx.send("New Record")
-        await ctx.send(GetRow(row_index))
     else:
         # offset - how much to add to the indices to get the right columns
         offset = existing_warning_count(listed) * 3
         cell_list = test.range(listed, 2+offset, listed, 4+offset)
         record = make_new_record(ctx, user, rule, listed, True)
 
-        await ctx.send(str(cell_list))
         cell_list = apply_values(cell_list, record)
-        await ctx.send(str(cell_list))
 
         # batch update
         test.update_cells(cell_list)
 
-        await ctx.send("Appended Record")
-        await ctx.send(str(GetRow(listed)))
+        if existing_warning_count(listed) == 3:
+            msg = f"{user} is on penultimate warning. Take aditional action."
+            await modChannel.send(msg)
+        if existing_warning_count(listed) >= 4:
+            msg = f"{user} used their final warning. Banning user..."
+            await modChannel.send(msg)
+
     await ctx.send("striketest")
 
 
@@ -220,8 +220,8 @@ def next_available_row(worksheet):
 
 
 def alreadyListedCheck(user: discord.Member, worksheet):
+    # str_list gets a list of all enries in column 1
     str_list = list(filter(None, worksheet.col_values(1)))
-    print(str_list)
     found = None
     for item in str_list:
         if str(user.discriminator) in item:
