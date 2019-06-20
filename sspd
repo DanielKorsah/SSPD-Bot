@@ -93,7 +93,7 @@ async def on_message(message):
          # Ayy lmao
         if str.lower(message.content) == "ayy":
             channel = message.channel
-            await channel.send("https://gph.is/2SonApE")
+            await channel.send("lmao")
 
         # remove invite links
         if "discord.gg" in message.content:
