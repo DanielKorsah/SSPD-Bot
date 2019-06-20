@@ -28,7 +28,8 @@ token_file = open("dToken.txt", "r")
 d_token = token_file.readline()
 
 # authorisation to access google sheet
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+scope = ["https://spreadsheets.google.com/feeds",
+         "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name(
     "client_secret.json", scope)
 gc = gspread.authorize(creds)
@@ -86,6 +87,11 @@ async def on_message(message):
 
         # bam backwards
         if str.lower(message.content) == "mab":
+            channel = message.channel
+            await channel.send("https://gph.is/2SonApE")
+
+         # Ayy lmao
+        if str.lower(message.content) == "ayy":
             channel = message.channel
             await channel.send("https://gph.is/2SonApE")
 
