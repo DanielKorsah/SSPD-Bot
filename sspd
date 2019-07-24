@@ -128,6 +128,20 @@ async def getline(ctx, num):
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
+async def poll(ctx, *question):
+    q = " ".join(question)
+    embed = discord.Embed(
+        title=q, color=0x50bdfe)
+    msg = await ctx.send(embed=embed)
+
+    await msg.add_reaction(emoji=u"\U0001F1FE")
+    await msg.add_reaction(emoji=u"\U0001F1F3")
+
+    await ctx.message.delete()
+
+
+@bot.command(pass_context=True)
+@commands.has_role("Moderators™")
 async def strike(ctx, user: discord.Member, *, rule=None):
 
     # check if a user already has an entry
