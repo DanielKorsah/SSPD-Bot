@@ -22,7 +22,7 @@ Makes use of the Google Sheets API to access a remote spreadsheet to be used as 
 ## Debug Commands:
 * &ID
 * &channelTest
-* pmTest
+* &pmTest
 
 &nbsp;
 
