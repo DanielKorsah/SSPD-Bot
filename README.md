@@ -14,15 +14,17 @@ Makes use of the Google Sheets API to access a remote spreadsheet to be used as 
 &nbsp;
 
 ## Mod Commands:
-* &strike
+* &strike  -  Add put user on a list of known offenders with a number of warnings
+* &poll    -  Create a yes/no poll with reacts
 
 &nbsp;
 
 ## Debug Commands:
 * &ID
+* &channelTest
+* pmTest
 
 &nbsp;
 
 ## TODO:
 * Daily check if a user's strike can be appealed.
-* Switch to production DB from the current test sheet.
