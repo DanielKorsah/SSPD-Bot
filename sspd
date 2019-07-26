@@ -1,5 +1,11 @@
 #!/usr/local/bin/python3.6
 
+# standard pacakages
+import os
+import asyncio
+import datetime
+
+# 3rd party packages
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from googleapiclient import discovery
@@ -7,9 +13,11 @@ from pprint import pprint
 import discord
 from discord.ext import commands
 from discord.ext.commands import bot
-import asyncio
-import datetime
 import logging
+
+# myPackages
+import common.channels as channels
+from common.globalBot import bot
 
 
 LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
@@ -18,7 +26,6 @@ logging.basicConfig(filename="bot.log",
 logger = logging.getLogger()
 
 now = datetime.datetime.now()
-bot = commands.Bot(command_prefix='&')
 client = discord.Client()
 
 # credential file for discord token
@@ -49,64 +56,29 @@ e.set_image(
     url="https://discordapp.com/assets/e4923594e694a21542a489471ecffa50.svg")
 
 
-#-----Hardcode-----
+# -----Hardcode-----
 
-#------------------
+# ------------------
 
 
 @bot.event
-#@commands.has_role("Moderators™")
+# @commands.has_role("Moderators™")
 async def on_ready():
     # initialise channel ids
-    global general
-    general = bot.get_channel(266593626501545984)
-    global modChannel
-    modChannel = bot.get_channel(300045476554735618)
-    global logChannel
-    logChannel = bot.get_channel(373156271056224256)
-
+    channels.general = bot.get_channel(266593626501545984)
+    channels.modChannel = bot.get_channel(300045476554735618)
+    channels.logChannel = bot.get_channel(373156271056224256)
     print("ID: " + str(bot.user.id))
     print(bot.user)
+
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py"):
+            bot.load_extension(f"cogs.{filename[:-3]}")
+
     print(bot.user.name + " Ready...")
 
 
-#----------------------
-
-
-@bot.event
-async def on_message(message):
-    if message.author != bot.user:
-        # if str.lower(message.content) == "ayy":
-        #    channel = message.channel
-        #    await channel.send("lmao")
-
-        # navy seal copy pasta
-        if "fuck" in str.lower(message.content) and "sspd" in str.lower(message.content):
-            channel = message.channel
-            await channel.send("Hey " + message.author.name + " What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet? Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You're fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little \"clever\" comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo.")
-
-        # bam backwards
-        if str.lower(message.content) == "mab":
-            channel = message.channel
-            await channel.send("https://gph.is/2SonApE")
-
-         # Ayy lmao
-        if str.lower(message.content) == "ayy":
-            channel = message.channel
-            await channel.send("lmao")
-
-        # remove invite links
-        if "discord.gg" in message.content:
-            msg = "User: " + str(message.author) + ", id: " + \
-                str(message.author.id) + ", posted a suspected invite link in the message: \n" + \
-                "\"" + message.content + "\"\n" + "In channel: " + \
-                message.channel.name + "\nMessage removed."
-            await modChannel.send(msg)
-            print(msg)
-            await message.delete()
-
-    # free up the bot event
-    await bot.process_commands(message)
+# ----------------------
 
 
 @bot.command(pass_context=True)
@@ -197,7 +169,7 @@ async def channelTest(ctx, flag: int):
 @commands.has_role("Moderators™")
 async def pmTest(ctx, user: discord.Member, *message: str):
     await user.send(message)
-    #-----------------------------
+    # -----------------------------
 
 
 def apply_values(cell_list, values_list):
