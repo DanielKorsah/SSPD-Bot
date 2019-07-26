@@ -1,12 +1,9 @@
 
 gspread
-oauth2client.service_account
-ServiceAccountCredentials 
-googleapiclient 
+oauth2client
+google-api-client 
 pprint 
 discord
-discord.ext 
-discord.ext.commands
 asyncio
 datetime
 logging
