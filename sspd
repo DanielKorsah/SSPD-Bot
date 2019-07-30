@@ -17,7 +17,6 @@ import logging
 
 # myPackages
 import common.channels as channels
-from common.globalBot import bot
 
 
 LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
@@ -27,6 +26,7 @@ logger = logging.getLogger()
 
 now = datetime.datetime.now()
 client = discord.Client()
+bot = commands.Bot(command_prefix='&')
 
 # credential file for discord token
 # windows path ../SSPD Secrets/
@@ -88,12 +88,6 @@ async def lewgasm(ctx):
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
-async def ping(ctx):
-    await ctx.send(f"pong! %{ctx.message.author}")
-
-
-@bot.command(pass_context=True)
-@commands.has_role("Moderators™")
 async def getline(ctx, num):
     await ctx.send(GetRow(num))
 
@@ -146,21 +140,21 @@ async def strike(ctx, user: discord.Member, *, rule=None):
 
         if existing_warning_count(listed) == 3:
             msg = f"{user} is on penultimate warning. Take aditional action."
-            await modChannel.send(msg)
+            await channels.modChannel.send(msg)
         if existing_warning_count(listed) >= 4:
             msg = f"{user} used their final warning. Banning user..."
-            await modChannel.send(msg)
+            await channels.modChannel.send(msg)
 
 
 @bot.command(pass_context=True)
 @commands.has_role("Moderators™")
 async def channelTest(ctx, flag: int):
     if flag == 3:
-        await general.send("test" + str(flag))
+        await channels.general.send("test" + str(flag))
     elif flag == 2:
-        await modChannel.send("test" + str(flag))
+        await channels.modChannel.send("test" + str(flag))
     elif flag == 1:
-        await logChannel.send("test" + str(flag))
+        await channels.logChannel.send("test" + str(flag))
     else:
         ctx.send("Incrrect usage. \n channeltest [x] where 0<x<4")
 

@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import common.channels as channels
-from common.globalBot import bot
 
 
 class TextListening(commands.Cog):
@@ -11,7 +10,7 @@ class TextListening(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.author != bot.user:
+        if message.author != self.bot.user:
             # if str.lower(message.content) == "ayy":
             #    channel = message.channel
             #    await channel.send("lmao")
@@ -42,7 +41,7 @@ class TextListening(commands.Cog):
                 await message.delete()
 
         # free up the bot event
-        await bot.process_commands(message)
+        # await self.bot.process_commands(message)
 
 
 def setup(bot):
