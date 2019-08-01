@@ -32,10 +32,7 @@ client = discord.Client()
 bot = commands.Bot(command_prefix='&')
 
 
-# -----Hardcode-----
-
-# ------------------
-
+# -----Setup Bot Properties and Modules-----
 
 @bot.event
 # @commands.has_role("Moderators™")
@@ -52,29 +49,7 @@ async def on_ready():
             bot.load_extension(f"cogs.{filename[:-3]}")
 
     print(bot.user.name + " Ready...")
-
-
 # ----------------------
-
-
-@bot.command(pass_context=True)
-async def lewgasm(ctx):
-    await ctx.send("https://imgur.com/a/oLKuUVY")
-
-
-@bot.command(pass_context=True)
-@commands.has_role("Moderators™")
-async def poll(ctx, *question):
-    q = " ".join(question)
-    embed = discord.Embed(
-        title=q, color=0x50bdfe)
-    await ctx.send(f"{ctx.message.author.mention} asks:")
-    msg = await ctx.send(embed=embed)
-
-    await msg.add_reaction(emoji=u"\U0001F1FE")
-    await msg.add_reaction(emoji=u"\U0001F1F3")
-
-    await ctx.message.delete()
 
 
 bot.run(d_token)

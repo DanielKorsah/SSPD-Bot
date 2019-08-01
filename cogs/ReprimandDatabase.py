@@ -52,6 +52,9 @@ class ReprimandDatabase(commands.Cog):
         listed = alreadyListedCheck(user, test)
         row_index = next_available_row(test)
 
+        warning_text = fr"You have been given a disciplinary strike in the Angory Tom Discord server for:\n{rule}\nStrikes may be repealed 1 month after recieving them if you ask a moderator.\Accumulate too many of these and you'll be banned."
+        await user.send(warning_text)
+
         # if user has no record already then make one else append to the old
         if bool(listed) == False:
             cell_list = test.range(row_index, 1, row_index, 4)
@@ -71,10 +74,6 @@ class ReprimandDatabase(commands.Cog):
 
             # batch update
             test.update_cells(cell_list)
-
-            warning_text = f"You have been given a disciplinary strike in the Angory Tom Discord server for:\n{rule}\nStrikes may be repealed 1 month after recieving them if you ask a moderator.\Accumulate too many of these and you'll be banned."
-
-            await user.send(warning_text)
 
             if existing_warning_count(listed) == 3:
                 msg = f"{user} is on penultimate warning. Take aditional action."
