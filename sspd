@@ -68,6 +68,7 @@ async def poll(ctx, *question):
     q = " ".join(question)
     embed = discord.Embed(
         title=q, color=0x50bdfe)
+    await ctx.send(f"{ctx.message.author.mention} asks:")
     msg = await ctx.send(embed=embed)
 
     await msg.add_reaction(emoji=u"\U0001F1FE")
