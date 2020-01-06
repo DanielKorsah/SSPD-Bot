@@ -31,12 +31,11 @@ d_token = token_file.readline()
 client = discord.Client()
 bot = commands.Bot(command_prefix='&')
 
-
 # -----Setup Bot Properties and Modules-----
-
 @bot.event
 # @commands.has_role("Moderators™")
 async def on_ready():
+    print("Intialising...")
     # initialise channel ids
     channels.general = bot.get_channel(266593626501545984)
     channels.modChannel = bot.get_channel(300045476554735618)
@@ -52,6 +51,5 @@ async def on_ready():
 
     print(bot.user.name + " Ready...")
 # ----------------------
-
 
 bot.run(d_token)

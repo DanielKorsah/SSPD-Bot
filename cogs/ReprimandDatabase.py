@@ -10,23 +10,6 @@ from googleapiclient import discovery
 from pprint import pprint
 
 
-# authorisation to access google sheet
-scope = ["https://spreadsheets.google.com/feeds",
-         "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name(
-    "client_secret.json", scope)
-gc = gspread.authorize(creds)
-
-# initialise current sheet
-sheet = gc.open("Warnings List").sheet1
-# intialise test sheet
-# test = gc.open("SSPD-Test").sheet1
-
-#-------------------------DANGER: SET TEST SHEET EQUAL TO PROD : DANGER---------------------------#
-test = sheet
-
-all = sheet.get_all_records(False, 3, "")
-
 now = datetime.datetime.now()
 
 e = discord.Embed()
@@ -38,6 +21,23 @@ class ReprimandDatabase(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+
+        # authorisation to access google sheet
+        scope = ["https://spreadsheets.google.com/feeds",
+                 "https://www.googleapis.com/auth/drive"]
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            "client_secret.json", scope)
+        gc = gspread.authorize(creds)
+
+        # initialise current sheet
+        sheet = gc.open("Warnings List").sheet1
+        # intialise test sheet
+        # test = gc.open("SSPD-Test").sheet1
+        #-------------------------DANGER: SET TEST SHEET EQUAL TO PROD : DANGER---------------------------#
+        global test
+        test = sheet
+        global all
+        all = sheet.get_all_records(False, 3, "")
 
     @commands.command(pass_context=True)
     @commands.has_role("Moderators™")
